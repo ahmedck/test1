@@ -1,4 +1,9 @@
-FROM php:7.2.7-fpm-alpine3.7
-RUN apk update; \
-    apk upgrade;
-RUN docker-php-ext-install mysqli
+FROM php:7.1.8-apache
+
+MAINTAINER Paul Redmond
+
+COPY . /srv/app
+COPY vhost.conf /etc/apache2/sites-available/000-default.conf
+
+RUN chown -R www-data:www-data /srv/app \
+    && a2enmod rewrite
